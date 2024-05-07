@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "725344943703",
+    "project_id": "loadspotter",
+    "storage_bucket": "loadspotter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725344943703:android:611d2aa06ee0b70bde6d12",
+        "android_client_info": {
+          "package_name": "com.example.loadspotter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATbQS-ksIfwtyyQrfr9r8VL5NLeLknrXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
