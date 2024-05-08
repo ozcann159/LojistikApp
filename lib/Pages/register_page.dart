@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,31 +26,28 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 80,
-              ),
-              const Padding(
-                padding: EdgeInsets.all(20),
+              Padding(
+                padding: EdgeInsets.all(2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 100,
+                        height: 200,
+                      ),
+                    ),
                     Text(
-                      "Hoşgeldiniz",
+                      "Hesap Oluştur",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      "Yük Bulmak Sadece Bir Dokunuş Uzağınızda!",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -92,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               child: const TextField(
                                 decoration: InputDecoration(
-                                    hintText: "E-Posta",
+                                    hintText: "Ad",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none,
                                     prefixIcon:
@@ -108,10 +105,56 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               child: const TextField(
                                 decoration: InputDecoration(
+                                    hintText: "Soyad",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                    prefixIcon:
+                                        Icon(Icons.person_outline_rounded)),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom:
+                                      BorderSide(color: Colors.green.shade50),
+                                ),
+                              ),
+                              child: const TextField(
+                                decoration: InputDecoration(
+                                    hintText: "E-mail",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                    prefixIcon: Icon(Icons.email_outlined)),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom:
+                                      BorderSide(color: Colors.green.shade50),
+                                ),
+                              ),
+                              child: const TextField(
+                                decoration: InputDecoration(
                                     hintText: "Parola",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none,
-                                    prefixIcon: Icon(Icons.lock)),
+                                    prefixIcon: Icon(Icons.fingerprint)),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom:
+                                      BorderSide(color: Colors.green.shade50),
+                                ),
+                              ),
+                              child: const TextField(
+                                decoration: InputDecoration(
+                                    hintText: "Parolayı Doğrula",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none,
+                                    prefixIcon: Icon(Icons.fingerprint)),
                               ),
                             ),
                           ],
@@ -128,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.green.shade400),
                         child: const Center(
                           child: Text(
-                            "Giriş Yap",
+                            "Kayıt Ol",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -140,14 +183,17 @@ class _LoginPageState extends State<LoginPage> {
                         height: 15,
                       ),
                       const Text(
-                        "Şifremi Unutum",
+                        "Hesabın var mı?",
                         style: TextStyle(color: Colors.grey),
                       ),
-                      const SizedBox(
-                        height: 15,
+                      InkWell(
+                        child: Text(
+                          "Giriş Yap",
+                          style: TextStyle(color: Colors.green.shade300),
+                        ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.3,
+                        height: MediaQuery.of(context).size.height * 0.8,
                       ),
                     ],
                   ),
