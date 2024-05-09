@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loadspotter/Pages/login_page.dart';
+import 'package:loadspotter/model/common_methods.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -8,6 +10,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController _userNameTextEditingController =
+      TextEditingController();
+  TextEditingController _surnameTextEditingController = TextEditingController();
+  TextEditingController _emailTextEditingController = TextEditingController();
+  TextEditingController _passwordTextEditingController =
+      TextEditingController();
+  TextEditingController _confirmPasswordTextEditingController =
+      TextEditingController();
+
+     
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       topRight: Radius.circular(60)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(25),
                   child: Column(
                     children: [
                       const SizedBox(height: 50),
@@ -87,7 +99,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
+                              child: TextField(
+                                controller: _userNameTextEditingController,
                                 decoration: InputDecoration(
                                     hintText: "Ad",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -103,7 +116,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
+                              child: TextField(
+                                controller: _surnameTextEditingController,
                                 decoration: InputDecoration(
                                     hintText: "Soyad",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -119,7 +133,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
+                              child: TextField(
+                                controller: _emailTextEditingController,
                                 decoration: InputDecoration(
                                     hintText: "E-mail",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -134,7 +149,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
+                              child: TextField(
+                                controller: _passwordTextEditingController,
                                 decoration: InputDecoration(
                                     hintText: "Parola",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -149,7 +165,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
+                              child: TextField(
+                                controller:
+                                    _confirmPasswordTextEditingController,
                                 decoration: InputDecoration(
                                     hintText: "Parolayı Doğrula",
                                     hintStyle: TextStyle(color: Colors.grey),
@@ -163,34 +181,50 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.04,
                       ),
-                      Container(
-                        height: 45,
-                        margin: const EdgeInsets.symmetric(horizontal: 45),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.green.shade400),
-                        child: const Center(
-                          child: Text(
-                            "Kayıt Ol",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          
+                        },
+                          
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(
+                              double.infinity, 45), // Butonun boyutunu ayarlar
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                50), // Butonun kenar yuvarlama miktarını ayarlar
+                          ),
+                          backgroundColor: Colors.green
+                              .shade600, // Butonun arka plan rengini ayarlar
+                        ),
+                        child: const Text(
+                          "Kayıt Ol",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
-                      const Text(
-                        "Hesabın var mı?",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      InkWell(
-                        child: Text(
-                          "Giriş Yap",
-                          style: TextStyle(color: Colors.green.shade300),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Hesabın var mı?",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
+                            child: Text("Giriş Yap"),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.8,

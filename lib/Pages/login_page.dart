@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loadspotter/model/common_methods.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,6 +9,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+
+   CommonMethods cMethods = CommonMethods();
+       checkIfNetworkIsAvaible(){
+        cMethods.checkConnectivity(context);
+      }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,8 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
-                                decoration: InputDecoration(
+                              child: TextField(
+                                controller: emailTextEditingController,
+                                decoration: const InputDecoration(
                                     hintText: "E-Posta",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none,
@@ -106,8 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                                       BorderSide(color: Colors.green.shade50),
                                 ),
                               ),
-                              child: const TextField(
-                                decoration: InputDecoration(
+                              child: TextField(
+                                controller: passwordTextEditingController,
+                                obscureText: true,
+                                decoration: const InputDecoration(
                                     hintText: "Parola",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none,
@@ -120,24 +133,31 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.04,
                       ),
-                      Container(
-                        height: 45,
-                        margin: const EdgeInsets.symmetric(horizontal: 45),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.green.shade400),
-                        child: const Center(
-                          child: Text(
-                            "Giriş Yap",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          checkIfNetworkIsAvaible();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(
+                              double.infinity, 45), // Butonun boyutunu ayarlar
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                50), // Butonun kenar yuvarlama miktarını ayarlar
+                          ),
+                          backgroundColor: Colors.green
+                              .shade600, // Butonun arka plan rengini ayarlar
+                        ),
+                        child: const Text(
+                          "Giriş Yap",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
                       const Text(
                         "Şifremi Unutum",
