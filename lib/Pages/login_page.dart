@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loadspotter/Pages/home_page.dart';
 import 'package:loadspotter/model/common_methods.dart';
+import 'package:loadspotter/providers/firebase_auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,12 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-
-   CommonMethods cMethods = CommonMethods();
-       checkIfNetworkIsAvaible(){
-        cMethods.checkConnectivity(context);
-      }
-
+  CommonMethods cMethods = CommonMethods();
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +132,33 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          checkIfNetworkIsAvaible();
+                          String email = emailTextEditingController.text;
+                          String password = passwordTextEditingController.text;
+                          if (email.isEmpty || password.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Lütfen e-posta ve şifre alanlarını doldurunuz"),
+                            ));
+                          } else {
+                            FirebaseAuthProvider()
+                                .signInWithEmailAndPassword(email, password)
+                                .then((_) {
+                              print("giriş başarılı");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                            }).catchError((error) {
+                              print("giriş hatalı: $error");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                      Text("Giriş işlemi başarısız: $error"),
+                                ),
+                              );
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(
@@ -156,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
                       const Text(
