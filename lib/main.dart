@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:loadspotter/Pages/splash_page.dart';
-import '../firebase_options.dart';
-import 'providers/firebase_auth_provider.dart';
+import 'package:loadspotter/Pages/bottomnav.dart';
 import 'package:provider/provider.dart';
 
+import '../firebase_options.dart';
+import 'providers/firebase_auth_provider.dart';
 
 const Color primaryColor = Color.fromARGB(15, 240, 123, 255); // Ana renk
 const Color secondaryColor = Color(0xFF28a745);
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: TextStyle(color: textColor), // Başka bir metin rengi
             ),
           ),
-          home: SplashPage()),
+          home: Bottomnav()),
     );
   }
 }
