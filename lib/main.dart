@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:loadspotter/Pages/bottomnav.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loadspotter/Pages/splash_page.dart';
+import 'package:loadspotter/blocs/load/load_bloc.dart';
 
-import '../firebase_options.dart';
-import 'providers/firebase_auth_provider.dart';
+import 'firebase_options.dart';
 
 const Color primaryColor = Color.fromARGB(15, 240, 123, 255); // Ana renk
 const Color secondaryColor = Color(0xFF28a745);
@@ -22,8 +22,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => FirebaseAuthProvider(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoadBloc>(
+          create: (context) => LoadBloc(), // LoadBloc'ı burada oluşturun
+        ),
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'My App',
@@ -37,7 +41,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: TextStyle(color: textColor), // Başka bir metin rengi
             ),
           ),
-          home: Bottomnav()),
+          home: SplashPage()),
     );
   }
 }
