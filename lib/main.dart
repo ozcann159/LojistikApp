@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadspotter/Pages/splash_page.dart';
 import 'package:loadspotter/blocs/load/load_bloc.dart';
+import 'package:loadspotter/blocs/auth/register_bloc.dart';
+
 
 import 'firebase_options.dart';
 
@@ -27,6 +29,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<LoadBloc>(
           create: (context) => LoadBloc(), // LoadBloc'ı burada oluşturun
         ),
+        BlocProvider<RegisterBloc>(
+  create: (context) => RegisterBloc(),
+)
+
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

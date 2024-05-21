@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadspotter/Pages/login_page.dart';
 import 'package:loadspotter/blocs/auth/auth_bloc.dart';
 import 'package:loadspotter/blocs/auth/auth_event.dart';
+import 'package:loadspotter/blocs/auth/register_event.dart';
 import 'package:loadspotter/repositories/auth_repository.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -13,14 +14,28 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController _userNameTextEditingController =
+  final TextEditingController _userNameTextEditingController =
       TextEditingController();
-  TextEditingController _surnameTextEditingController = TextEditingController();
-  TextEditingController _emailTextEditingController = TextEditingController();
-  TextEditingController _passwordTextEditingController =
+  final TextEditingController _surnameTextEditingController =
       TextEditingController();
-  TextEditingController _confirmPasswordTextEditingController =
+  final TextEditingController _emailTextEditingController =
       TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
+  final TextEditingController _confirmPasswordTextEditingController =
+      TextEditingController();
+
+      final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _userNameTextEditingController.dispose();
+    _surnameTextEditingController.dispose();
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    _confirmPasswordTextEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -104,15 +119,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.green.shade50),
+                                      bottom: BorderSide(
+                                          color: Colors.green.shade50),
                                     ),
                                   ),
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller: _userNameTextEditingController,
                                     decoration: const InputDecoration(
                                         hintText: "Ad",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                         prefixIcon:
                                             Icon(Icons.person_outline_rounded)),
@@ -121,15 +137,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.green.shade50),
+                                      bottom: BorderSide(
+                                          color: Colors.green.shade50),
                                     ),
                                   ),
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller: _surnameTextEditingController,
                                     decoration: const InputDecoration(
                                         hintText: "Soyad",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                         prefixIcon:
                                             Icon(Icons.person_outline_rounded)),
@@ -138,15 +155,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.green.shade50),
+                                      bottom: BorderSide(
+                                          color: Colors.green.shade50),
                                     ),
                                   ),
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller: _emailTextEditingController,
                                     decoration: const InputDecoration(
                                         hintText: "E-mail",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                         prefixIcon: Icon(Icons.email_outlined)),
                                   ),
@@ -154,15 +172,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.green.shade50),
+                                      bottom: BorderSide(
+                                          color: Colors.green.shade50),
                                     ),
                                   ),
-                                  child: TextField(
+                                  child: TextFormField(
+                                    obscureText: true,
                                     controller: _passwordTextEditingController,
                                     decoration: const InputDecoration(
                                         hintText: "Parola",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                         prefixIcon: Icon(Icons.fingerprint)),
                                   ),
@@ -170,16 +190,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.green.shade50),
+                                      bottom: BorderSide(
+                                          color: Colors.green.shade50),
                                     ),
                                   ),
-                                  child: TextField(
+                                  child: TextFormField(
                                     controller:
                                         _confirmPasswordTextEditingController,
                                     decoration: const InputDecoration(
                                         hintText: "Parolayı Doğrula",
-                                        hintStyle: TextStyle(color: Colors.grey),
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
                                         border: InputBorder.none,
                                         prefixIcon: Icon(Icons.fingerprint)),
                                   ),
@@ -191,18 +212,36 @@ class _RegisterPageState extends State<RegisterPage> {
                             height: MediaQuery.of(context).size.height * 0.04,
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              if (_passwordTextEditingController.text ==
-                                  _confirmPasswordTextEditingController.text) {
-                                BlocProvider.of<AuthBloc>(context).add(
-                                    SignUpEvent(_emailTextEditingController.text,
-                                        _passwordTextEditingController.text));
+                        onPressed: () async {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            String email = _emailTextEditingController.text;
+                            String password = _passwordTextEditingController.text;
+                            try {
+                              String result = await AuthRepository().signIn(email, password);
+                              if (result == "Giriş Başarılı") {
+                                print("giriş başarılı");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                   const SnackBar(
-                                        content: Text("Parolalar Eşleşmiyor")));
+                                  SnackBar(
+                                    content: Text("Giriş işlemi başarısız: $result"),
+                                  ),
+                                );
                               }
-                            },
+                            } catch (error) {
+                              print("giriş hatalı: $error");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Giriş işlemi başarısız: $error"),
+                                ),
+                              );
+                            }
+                          }
+                        },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(double.infinity,
                                   45), // Butonun boyutunu ayarlar
@@ -228,7 +267,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                            const  Text(
+                              const Text(
                                 "Hesabın var mı?",
                                 style: TextStyle(color: Colors.grey),
                               ),
@@ -243,9 +282,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.8,
-                          ),
+                         
                         ],
                       ),
                     ),
