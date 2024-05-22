@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/login_page.dart';
-import 'package:loadspotter/Pages/register_page.dart';
+import 'package:loadspotter/Pages/signup_page.dart';
+
 
 class SplashPage extends StatefulWidget {
   @override
@@ -51,9 +53,9 @@ class _SplashPageState extends State<SplashPage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage()));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignupPage()));
                   },
                   child: Text(
                     "Kayıt Ol",

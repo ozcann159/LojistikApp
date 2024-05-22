@@ -44,4 +44,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield SignUpFailureState(error.toString()); // Kayıt başarısız durumunu bildir
     }
   }
+
+  
 }

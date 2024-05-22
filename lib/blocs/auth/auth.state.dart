@@ -9,6 +9,24 @@ abstract class AuthState extends Equatable {
 
 class AuthInitial extends AuthState {}
 
+class AuthSuccess extends AuthState {
+  final String message;
+
+  const AuthSuccess(this.message);
+
+   @override
+  List<Object> get props => [message];
+}
+
+class AuthFailure extends AuthState {
+  final String error;
+
+  const AuthFailure(this.error);
+
+  @override
+  List<Object> get props => [error];
+}
+
 class SigningInState extends AuthState {}
 
 class SignInSuccessState extends AuthState {}

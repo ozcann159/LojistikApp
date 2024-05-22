@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loadspotter/Pages/splash_page.dart';
+import 'package:loadspotter/Pages/offer_screen.dart';
 import 'package:loadspotter/blocs/load/load_bloc.dart';
-import 'package:loadspotter/blocs/auth/register_bloc.dart';
+import 'package:loadspotter/blocs/offer/offer_bloc.dart';
+import 'package:loadspotter/blocs/userController/user_controller_bloc.dart';
+import 'package:loadspotter/repositories/auth_repository.dart';
+import 'package:loadspotter/repositories/firestore_services.dart';
 
 
 import 'firebase_options.dart';
@@ -29,9 +32,13 @@ class MyApp extends StatelessWidget {
         BlocProvider<LoadBloc>(
           create: (context) => LoadBloc(), // LoadBloc'ı burada oluşturun
         ),
-        BlocProvider<RegisterBloc>(
-  create: (context) => RegisterBloc(),
-)
+        BlocProvider<UserControllerBloc>(
+          create: (context) =>
+              UserControllerBloc(firebaseAuthRepo: AuthRepository()),
+        ),
+        BlocProvider<OffersBloc>(
+  create: (context) => OffersBloc(firestoreService: FirestoreService()),
+),
 
       ],
       child: MaterialApp(
@@ -47,7 +54,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: TextStyle(color: textColor), // Başka bir metin rengi
             ),
           ),
-          home: SplashPage()),
+          home: OfferScreen(loadPostingId: 'your_load_posting_id')),
     );
   }
 }
