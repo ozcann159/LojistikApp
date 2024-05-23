@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:loadspotter/models/loadPosting.dart';
 
 class AddLoadPostingScreen extends StatefulWidget {
   @override
@@ -8,24 +9,35 @@ class AddLoadPostingScreen extends StatefulWidget {
 
 class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _selectedFromCity = 'Ankara';
-  String _selectedToCity = 'Istanbul';
-  String _explanation = '';
-  String _history = '';
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
 
-  final List<String> _cities = [
-    'Adana', 'Ankara', 'Antalya', 'Bursa', 'Istanbul', 'Izmir', 'Konya'
-  ];
-
-  void _addPosting() {
+  void _addLoadPosting() async {
     if (_formKey.currentState!.validate()) {
-      FirebaseFirestore.instance.collection('postings').add({
-        'title': '$_selectedFromCity - $_selectedToCity',
-        'explanation': _explanation,
-        'history': _history,
-        'id': '', // ID otomatik olarak atanacak
-      });
-      Navigator.pop(context);
+      final String id = FirebaseFirestore.instance.collection('loadPostings').doc().id;
+      final String title = _titleController.text;
+      final String description = _descriptionController.text;
+      final String location = _locationController.text;
+      final String amount = _amountController.text;
+
+      // Create a new LoadPosting object
+      final loadPosting = LoadPosting(
+        id: id,
+        title: title,
+        description: description,
+        location: location,
+        amount: amount,
+      );
+
+      // Save it to Firestore
+      await FirebaseFirestore.instance
+          .collection('loadPostings')
+          .doc(id)
+          .set(loadPosting.toMap());
+
+      Navigator.pop(context); // Go back to the previous screen
     }
   }
 
@@ -33,76 +45,58 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Yük İlanı Ekle'),
+        title: Text('Add Load Posting'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: ListView(
+          child: Column(
             children: [
-              DropdownButtonFormField(
-                value: _selectedFromCity,
-                decoration: InputDecoration(labelText: 'Başlangıç Şehri'),
-                items: _cities.map((city) {
-                  return DropdownMenuItem(
-                    value: city,
-                    child: Text(city),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedFromCity = value as String;
-                  });
-                },
-              ),
-              DropdownButtonFormField(
-                value: _selectedToCity,
-                decoration: InputDecoration(labelText: 'Varış Şehri'),
-                items: _cities.map((city) {
-                  return DropdownMenuItem(
-                    value: city,
-                    child: Text(city),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedToCity = value as String;
-                  });
-                },
-              ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Açıklama'),
+                controller: _titleController,
+                decoration: InputDecoration(labelText: 'Title'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lütfen bir açıklama girin';
+                    return 'Please enter a title';
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  setState(() {
-                    _explanation = value;
-                  });
-                },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Geçmiş'),
+                controller: _descriptionController,
+                decoration: InputDecoration(labelText: 'Description'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lütfen geçmiş bilgisi girin';
+                    return 'Please enter a description';
                   }
                   return null;
                 },
-                onChanged: (value) {
-                  setState(() {
-                    _history = value;
-                  });
+              ),
+              TextFormField(
+                controller: _locationController,
+                decoration: InputDecoration(labelText: 'Location'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a location';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _amountController,
+                decoration: InputDecoration(labelText: 'Amount'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an amount';
+                  }
+                  return null;
                 },
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _addPosting,
-                child: Text('İlanı Ekle'),
+                onPressed: _addLoadPosting,
+                child: Text('Add Load Posting'),
               ),
             ],
           ),
