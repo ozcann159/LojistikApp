@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 
 class AddLoadPostingScreen extends StatefulWidget {
@@ -16,7 +16,8 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
 
   void _addLoadPosting() async {
     if (_formKey.currentState!.validate()) {
-      final String id = FirebaseFirestore.instance.collection('loadPostings').doc().id;
+      final String id =
+          FirebaseFirestore.instance.collection('loadPostings').doc().id;
       final String title = _titleController.text;
       final String description = _descriptionController.text;
       final String location = _locationController.text;
@@ -37,7 +38,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
           .doc(id)
           .set(loadPosting.toMap());
 
-      Navigator.pop(context); // Go back to the previous screen
+      Navigator.pop(context); 
     }
   }
 
@@ -45,7 +46,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Load Posting'),
+        title: Text('Yük İlanı Ekle'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -55,7 +56,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(labelText: 'Yük Başlığı'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a title';
@@ -65,7 +66,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
               ),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(labelText: 'Açıklama'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a description';
@@ -75,7 +76,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
               ),
               TextFormField(
                 controller: _locationController,
-                decoration: InputDecoration(labelText: 'Location'),
+                decoration: InputDecoration(labelText: 'Konum'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a location';
@@ -85,7 +86,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
               ),
               TextFormField(
                 controller: _amountController,
-                decoration: InputDecoration(labelText: 'Amount'),
+                decoration: InputDecoration(labelText: 'Yük Miktarı'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter an amount';
@@ -96,7 +97,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _addLoadPosting,
-                child: Text('Add Load Posting'),
+                child: Text('İlan Ekle'),
               ),
             ],
           ),

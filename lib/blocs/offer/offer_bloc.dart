@@ -8,20 +8,36 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
 
   OffersBloc({required this.firestoreService}) : super(OffersInitial()) {
     on<OfferAdded>(_onOfferAdded);
+    on<LoadOffers>(_onLoadOffers);
   }
 
-  Stream<OffersState> _onOfferAdded(OfferAdded event, Emitter<OffersState> emit) async* {
+  void _onOfferAdded(OfferAdded event, Emitter<OffersState> emit) async {
     try {
-      yield OffersLoading();
+      emit(OffersLoading());
       await firestoreService.addOffer(event.offer);
-      yield const OffersLoaded([]);
+      emit(OfferAddedSuccess());
+      add(LoadOffers(event.offer.loadPostingId)); // Teklif eklendikten sonra teklifleri yükle
     } catch (e) {
-      yield OfferError(message: e.toString());
+      emit(OfferError(message: e.toString()));
     }
   }
 
-  @override
-  Stream<OffersState> mapEventToState(OffersEvent event) async* {
-    // Bu metod içinde başka olaylar da işlenebilir.
+  void _onLoadOffers(LoadOffers event, Emitter<OffersState> emit) async {
+    try {
+      emit(OffersLoading());
+      final offers = await firestoreService.getOffers(event.loadPostingId).first;
+      emit(OffersLoaded(offers));
+    } catch (e) {
+      emit(OfferError(message: e.toString()));
+    }
   }
+}
+
+class LoadOffers extends OffersEvent {
+  final String loadPostingId;
+
+  const LoadOffers(this.loadPostingId);
+
+  @override
+  List<Object> get props => [loadPostingId];
 }

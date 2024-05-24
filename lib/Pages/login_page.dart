@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:loadspotter/Pages/add_load_posting_screen.dart';
+import 'package:loadspotter/Pages/home_page.dart';
 
 import 'package:loadspotter/repositories/auth_repository.dart';
 
@@ -163,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AddLoadPostingScreen()),
+                                      builder: (context) => HomePage()),
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(

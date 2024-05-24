@@ -1,35 +1,35 @@
 class Offer {
   final String id;
   final String loadPostingId;
-  final String userId;
-  final double price;
-  final String status;
+  final String offerAmount;
+  final String deliveryTime;
+  final String contactInfo;
 
   Offer({
     required this.id,
     required this.loadPostingId,
-    required this.userId,
-    required this.price,
-    required this.status,
+    required this.offerAmount,
+    required this.deliveryTime,
+    required this.contactInfo,
   });
+
+  factory Offer.fromMap(Map<String, dynamic> data) {
+    return Offer(
+      id: data['id'] ?? '',
+      loadPostingId: data['loadPostingId'] ?? '',
+      offerAmount: data['offerAmount'] ?? '',
+      deliveryTime: data['deliveryTime'] ?? '',
+      contactInfo: data['contactInfo'] ?? '',
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'loadPostingId': loadPostingId,
-      'userId': userId,
-      'price': price,
-      'status': status,
+      'offerAmount': offerAmount,
+      'deliveryTime': deliveryTime,
+      'contactInfo': contactInfo,
     };
-  }
-
-  static Offer fromMap(Map<String, dynamic> map) {
-    return Offer(
-      id: map['id'],
-      loadPostingId: map['loadPostingId'],
-      userId: map['userId'],
-      price: map['price'],
-      status: map['status'],
-    );
   }
 }

@@ -1,5 +1,3 @@
-// offer_state.dart
-
 import 'package:equatable/equatable.dart';
 import 'package:loadspotter/models/offer.dart';
 
@@ -22,6 +20,8 @@ class OffersLoaded extends OffersState {
   @override
   List<Object> get props => [offers];
 }
+
+class OfferAddedSuccess extends OffersState {}
 
 class OfferError extends OffersState {
   final String message;

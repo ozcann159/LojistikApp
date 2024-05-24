@@ -1,5 +1,3 @@
-// offer_event.dart
-
 import 'package:equatable/equatable.dart';
 import 'package:loadspotter/models/offer.dart';
 
