@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadspotter/blocs/userController/user_controller_event.dart';
 import 'package:loadspotter/blocs/userController/user_controller_state.dart';
 import 'package:loadspotter/repositories/auth_repository.dart';
-import 'package:loadspotter/repositories/firebase_auth.dart';
 
 class UserControllerBloc
     extends Bloc<UserControllerEvent, UserControllerState> {

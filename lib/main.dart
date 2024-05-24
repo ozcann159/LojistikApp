@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loadspotter/Pages/add_load_posting_screen.dart';
-import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/Pages/splash_page.dart';
 import 'package:loadspotter/blocs/load/load_bloc.dart';
 import 'package:loadspotter/blocs/offer/offer_bloc.dart';
@@ -22,16 +20,18 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoadBloc>(
-          create: (context) => LoadBloc(), // LoadBloc'ı burada oluşturun
+          create: (context) => LoadBloc(), 
         ),
         BlocProvider<UserControllerBloc>(
           create: (context) =>
@@ -48,13 +48,13 @@ class MyApp extends StatelessWidget {
             fontFamily: "Poppins",
             primaryColor: const Color.fromARGB(255, 69, 181, 73), // Ana renk
             scaffoldBackgroundColor:
-                Color.fromARGB(255, 56, 170, 61), // Arka plan rengi
-            textTheme: TextTheme(
+                const Color.fromARGB(255, 56, 170, 61), // Arka plan rengi
+            textTheme: const TextTheme(
               bodySmall: TextStyle(color: textColor),
               bodyMedium: TextStyle(color: textColor), // Başka bir metin rengi
             ),
           ),
-          home: SplashPage()),
+          home: const SplashPage()),
     );
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/login_page.dart';
 import 'package:loadspotter/Pages/signup_page.dart';
 
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
   @override
   State<SplashPage> createState() => _SplashPageState();
 }
@@ -13,7 +14,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,32 +38,32 @@ class _SplashPageState extends State<SplashPage> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                        MaterialPageRoute(builder: (context) => const LoginPage()));
                   },
-                  child: Text(
+                  child: const Text(
                     "Giriş Yap",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300, 45),
+                      minimumSize: const Size(300, 45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40)),
                       backgroundColor: Colors.green.shade800),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignupPage()));
+                                      builder: (context) => const SignupPage()));
                   },
-                  child: Text(
+                  child: const Text(
                     "Kayıt Ol",
                     style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(300, 45),
+                      minimumSize: const Size(300, 45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40)),
                       backgroundColor: Colors.white),

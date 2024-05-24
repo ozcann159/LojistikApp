@@ -23,7 +23,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
       final String location = _locationController.text;
       final String amount = _amountController.text;
 
-      // Create a new LoadPosting object
+      
       final loadPosting = LoadPosting(
         id: id,
         title: title,
@@ -32,7 +32,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
         amount: amount,
       );
 
-      // Save it to Firestore
+      
       await FirebaseFirestore.instance
           .collection('loadPostings')
           .doc(id)

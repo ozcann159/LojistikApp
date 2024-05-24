@@ -10,9 +10,10 @@ import 'package:loadspotter/repositories/firestore_services.dart';
 class LoadPostingDetailsScreen extends StatefulWidget {
   final LoadPosting loadPosting;
 
-  LoadPostingDetailsScreen({required this.loadPosting});
+  const LoadPostingDetailsScreen({required this.loadPosting});
 
   @override
+  
   _LoadPostingDetailsScreenState createState() => _LoadPostingDetailsScreenState();
 }
 
@@ -43,20 +44,20 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Başlık: ${widget.loadPosting.title}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 8),
-              Text('Açıklama: ${widget.loadPosting.description}', style: TextStyle(fontSize: 16)),
-              SizedBox(height: 8),
-              Text('Lokasyon: ${widget.loadPosting.location}', style: TextStyle(fontSize: 16)),
-              SizedBox(height: 8),
-              Text('Miktar: ${widget.loadPosting.amount}', style: TextStyle(fontSize: 16)),
-              SizedBox(height: 16),
+              const SizedBox(height: 8),
+              Text('Açıklama: ${widget.loadPosting.description}', style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 8),
+              Text('Lokasyon: ${widget.loadPosting.location}', style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 8),
+              Text('Miktar: ${widget.loadPosting.amount}', style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 16),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
                     TextFormField(
                       controller: _offerAmountController,
-                      decoration: InputDecoration(labelText: 'Teklif Miktarı'),
+                      decoration: const InputDecoration(labelText: 'Teklif Miktarı'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Teklif miktarını girin';
@@ -66,7 +67,7 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                     ),
                     TextFormField(
                       controller: _deliveryTimeController,
-                      decoration: InputDecoration(labelText: 'Teslim Süresi'),
+                      decoration: const InputDecoration(labelText: 'Teslim Süresi'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Teslim süresini girin';
@@ -76,7 +77,7 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                     ),
                     TextFormField(
                       controller: _contactInfoController,
-                      decoration: InputDecoration(labelText: 'İletişim Bilgileri'),
+                      decoration: const InputDecoration(labelText: 'İletişim Bilgileri'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'İletişim bilgilerini girin';
@@ -84,7 +85,7 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -98,21 +99,21 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                           BlocProvider.of<OffersBloc>(context).add(OfferAdded(newOffer));
                         }
                       },
-                      child: Text('Teklif Ver'),
+                      child: const Text('Teklif Ver'),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 16),
-              Text('Teklifler:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 8),
+              const SizedBox(height: 16),
+              const Text('Teklifler:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
               BlocBuilder<OffersBloc, OffersState>(
                 builder: (context, state) {
                   if (state is OffersLoading) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state is OffersLoaded) {
                     if (state.offers.isEmpty) {
-                      return Text('Henüz teklif yok');
+                      return const Text('Henüz teklif yok');
                     }
                     return ListView.builder(
                       shrinkWrap: true,
