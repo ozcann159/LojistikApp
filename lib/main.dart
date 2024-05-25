@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadspotter/Pages/load_postings_screen.dart';
-import 'package:loadspotter/Pages/splash_page.dart';
 import 'package:loadspotter/blocs/load/load_bloc.dart';
 import 'package:loadspotter/blocs/offer/offer_bloc.dart';
 import 'package:loadspotter/blocs/userController/user_controller_bloc.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoadBloc>(
-          create: (context) => LoadBloc(), 
+          create: (context) => LoadBloc(),
         ),
         BlocProvider<UserControllerBloc>(
           create: (context) =>
@@ -47,15 +46,14 @@ class MyApp extends StatelessWidget {
           title: 'My App',
           theme: ThemeData(
             fontFamily: "Poppins",
-            primaryColor: const Color.fromARGB(255, 69, 181, 73), // Ana renk
-            scaffoldBackgroundColor:
-                const Color.fromARGB(255, 56, 170, 61), // Arka plan rengi
+            primaryColor: const Color.fromARGB(255, 69, 181, 73),
+            scaffoldBackgroundColor: const Color.fromARGB(255, 56, 170, 61),
             textTheme: const TextTheme(
               bodySmall: TextStyle(color: textColor),
-              bodyMedium: TextStyle(color: textColor), // Başka bir metin rengi
+              bodyMedium: TextStyle(color: textColor),
             ),
           ),
-          home:  LoadPostingsScreen()),
+          home: LoadPostingsScreen()),
     );
   }
 }

@@ -30,7 +30,7 @@ class LoadPostingsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final loadPosting = loadPostings[index];
                 return Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Card(
                     elevation: 5,
                     shape: RoundedRectangleBorder(
@@ -48,7 +48,7 @@ class LoadPostingsScreen extends StatelessWidget {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -71,7 +71,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             Text(
                               'Lokasyon: ${loadPosting.location}',
                               style: TextStyle(
-                                  color: Colors.grey[800],
+                                  color: Colors.red,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -79,7 +79,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             Text(
                               'Miktar: ${loadPosting.amount}',
                               style: TextStyle(
-                                  color: Colors.grey[800],
+                                  color: Colors.red,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),

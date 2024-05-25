@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loadspotter/models/loadPosting.dart';
-import 'package:loadspotter/models/offer.dart';
 import 'package:loadspotter/blocs/offer/offer_bloc.dart';
 import 'package:loadspotter/blocs/offer/offer_event.dart';
 import 'package:loadspotter/blocs/offer/offer_state.dart';
+import 'package:loadspotter/models/loadPosting.dart';
+import 'package:loadspotter/models/offer.dart';
 import 'package:loadspotter/repositories/firestore_services.dart';
 
 class LoadPostingDetailsScreen extends StatefulWidget {
@@ -13,8 +13,8 @@ class LoadPostingDetailsScreen extends StatefulWidget {
   const LoadPostingDetailsScreen({required this.loadPosting});
 
   @override
-  
-  _LoadPostingDetailsScreenState createState() => _LoadPostingDetailsScreenState();
+  _LoadPostingDetailsScreenState createState() =>
+      _LoadPostingDetailsScreenState();
 }
 
 class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
@@ -43,13 +43,17 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Başlık: ${widget.loadPosting.title}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text('Başlık: ${widget.loadPosting.title}',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
-              Text('Açıklama: ${widget.loadPosting.description}', style: const TextStyle(fontSize: 16)),
+              Text('Açıklama: ${widget.loadPosting.description}',
+                  style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 8),
-              Text('Lokasyon: ${widget.loadPosting.location}', style: const TextStyle(fontSize: 16)),
+              Text('Lokasyon: ${widget.loadPosting.location}',
+                  style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 8),
-              Text('Miktar: ${widget.loadPosting.amount}', style: const TextStyle(fontSize: 16)),
+              Text('Miktar: ${widget.loadPosting.amount}',
+                  style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 16),
               Form(
                 key: _formKey,
@@ -57,7 +61,8 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                   children: [
                     TextFormField(
                       controller: _offerAmountController,
-                      decoration: const InputDecoration(labelText: 'Teklif Miktarı'),
+                      decoration:
+                          const InputDecoration(labelText: 'Teklif Miktarı'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Teklif miktarını girin';
@@ -67,7 +72,8 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                     ),
                     TextFormField(
                       controller: _deliveryTimeController,
-                      decoration: const InputDecoration(labelText: 'Teslim Süresi'),
+                      decoration:
+                          const InputDecoration(labelText: 'Teslim Süresi'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Teslim süresini girin';
@@ -77,7 +83,8 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                     ),
                     TextFormField(
                       controller: _contactInfoController,
-                      decoration: const InputDecoration(labelText: 'İletişim Bilgileri'),
+                      decoration: const InputDecoration(
+                          labelText: 'İletişim Bilgileri'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'İletişim bilgilerini girin';
@@ -96,7 +103,8 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                             deliveryTime: _deliveryTimeController.text,
                             contactInfo: _contactInfoController.text,
                           );
-                          BlocProvider.of<OffersBloc>(context).add(OfferAdded(newOffer));
+                          BlocProvider.of<OffersBloc>(context)
+                              .add(OfferAdded(newOffer));
                         }
                       },
                       child: const Text('Teklif Ver'),
@@ -105,7 +113,8 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text('Teklifler:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text('Teklifler:',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
               BlocBuilder<OffersBloc, OffersState>(
                 builder: (context, state) {
@@ -122,12 +131,14 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                         final offer = state.offers[index];
                         return ListTile(
                           title: Text('Teklif Miktarı: ${offer.offerAmount}'),
-                          subtitle: Text('Teslim Süresi: ${offer.deliveryTime}\nİletişim: ${offer.contactInfo}'),
+                          subtitle: Text(
+                              'Teslim Süresi: ${offer.deliveryTime}\nİletişim: ${offer.contactInfo}'),
                         );
                       },
                     );
                   } else if (state is OfferError) {
-                    return Text('Teklifler yüklenirken hata oluştu: ${state.message}');
+                    return Text(
+                        'Teklifler yüklenirken hata oluştu: ${state.message}');
                   } else {
                     return Container();
                   }
