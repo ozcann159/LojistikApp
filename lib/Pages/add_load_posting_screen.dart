@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loadspotter/models/loadPosting.dart';
+import 'package:loadspotter/Pages/load_postings_screen.dart'; // Bu satırın doğru olduğundan emin olun
 
 class AddLoadPostingScreen extends StatefulWidget {
   @override
@@ -114,7 +115,12 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
           .collection('loadPostings')
           .doc(id)
           .set(loadPosting.toMap());
-      Navigator.pop(context);
+
+      // Burada yönlendirme yapılacak
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
+      );
     }
   }
 
