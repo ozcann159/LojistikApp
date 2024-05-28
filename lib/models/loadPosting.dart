@@ -1,35 +1,32 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class LoadPosting {
   final String id;
-  final String title;
-  final String description;
-  final String location;
-  final String amount;
+  final String loadingAddress;
+  final String destinationAddress;
+  final String deliveryDate;
 
   LoadPosting({
     required this.id,
-    required this.title,
-    required this.description,
-    required this.location,
-    required this.amount,
+    required this.loadingAddress,
+    required this.destinationAddress,
+    required this.deliveryDate,
   });
 
   factory LoadPosting.fromMap(Map<String, dynamic> data) {
     return LoadPosting(
       id: data['id'] ?? '',
-      title: data['title'] ?? '',
-      description: data['description'] ?? '',
-      location: data['location'] ?? '',
-      amount: data['amount'] ?? '',
+      loadingAddress: data['loadingAddress'] ?? '',
+      destinationAddress: data['destinationAddress'] ?? '',
+      deliveryDate: data['deliveryDate'] ?? '',
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'title': title,
-      'description': description,
-      'location': location,
-      'amount': amount,
+      'loadingAddress': loadingAddress,
+      'destinationAddress': destinationAddress,
+      'deliveryDate': deliveryDate,
     };
   }
 }

@@ -53,7 +53,7 @@ class LoadPostingsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              loadPosting.title,
+                              loadPosting.deliveryDate,
                               style: TextStyle(
                                   color: Colors.grey[800],
                                   fontSize: 20,
@@ -61,7 +61,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              loadPosting.description,
+                              loadPosting.destinationAddress,
                               style: TextStyle(
                                   color: Colors.grey[800],
                                   fontSize: 20,
@@ -69,7 +69,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'Lokasyon: ${loadPosting.location}',
+                              'Lokasyon: ${loadPosting.loadingAddress}',
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 15,
@@ -77,7 +77,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'Miktar: ${loadPosting.amount}',
+                              'Miktar: ${loadPosting.id}',
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 15,

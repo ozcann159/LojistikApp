@@ -35,7 +35,7 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.loadPosting.title),
+        title: Text(widget.loadPosting.id),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,18 +43,18 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Başlık: ${widget.loadPosting.title}',
+              Text('Varış noktası: ${widget.loadPosting.destinationAddress}',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
-              Text('Açıklama: ${widget.loadPosting.description}',
+              Text('teslim tarihi: ${widget.loadPosting.deliveryDate}',
                   style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 8),
-              Text('Lokasyon: ${widget.loadPosting.location}',
+              Text('Yük Adresi: ${widget.loadPosting.loadingAddress}',
                   style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 8),
-              Text('Miktar: ${widget.loadPosting.amount}',
-                  style: const TextStyle(fontSize: 16)),
-              const SizedBox(height: 16),
+              // Text('Miktar: ${widget.loadPosting.id}',
+              //     style: const TextStyle(fontSize: 16)),
+              // const SizedBox(height: 16),
               Form(
                 key: _formKey,
                 child: Column(

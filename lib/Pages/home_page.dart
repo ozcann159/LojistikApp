@@ -47,8 +47,8 @@ class LoadPostingsList extends StatelessWidget {
             itemBuilder: (context, index) {
               final loadPosting = loadPostings[index];
               return ListTile(
-                title: Text(loadPosting.title),
-                subtitle: Text(loadPosting.description),
+                title: Text(loadPosting.loadingAddress),
+                subtitle: Text(loadPosting.destinationAddress),
                 onTap: () {
                   Navigator.push(
                     context,
