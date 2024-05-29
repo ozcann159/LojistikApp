@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
                     Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const SignupPage()));
+                                      builder: (context) =>  SignupPage()));
                   },
                   child: const Text(
                     "Kayıt Ol",

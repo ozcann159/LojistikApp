@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/driver_register.dart';
-import 'package:loadspotter/Pages/home_page.dart';
+import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/Pages/signup_page.dart';
-import 'package:loadspotter/repositories/auth_repository.dart'; // SignupPage'yi import et
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +17,46 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+
+  Future<void> signIn() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      String email = emailTextEditingController.text;
+      String password = passwordTextEditingController.text;
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user?.uid)
+            .get();
+        String userType = userDoc['userType'];
+
+        if (userType == 'Driver') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => DriverRegistrationPage()),
+          );
+        } else if (userType == 'Freighter') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Invalid user type'),
+          ));
+        }
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Failed to sign in: ${e.message}'),
+        ));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,41 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState?.validate() ?? false) {
-                                String email = emailTextEditingController.text;
-                                String password =
-                                    passwordTextEditingController.text;
-                                try {
-                                  String result = await AuthRepository()
-                                      .signIn(email, password);
-                                  if (result == "Giriş Başarılı") {
-                                    print("giriş başarılı");
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomePage(),
-                                      ),
-                                    );
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            "Giriş işlemi başarısız: $result"),
-                                      ),
-                                    );
-                                  }
-                                } catch (error) {
-                                  print("giriş hatalı: $error");
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          "Giriş işlemi başarısız: $error"),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
+                            onPressed: signIn,
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(150, 45),
                               shape: RoundedRectangleBorder(
@@ -215,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -265,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: Colors.white,
                         ),
                         child: Text(
-                          "Şoför olarak devam et",
+                          "Şoför olarak kayıt ol",
                           style: TextStyle(
                             color: Colors.green.shade600,
                             fontWeight: FontWeight.bold,
@@ -293,7 +300,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         child: Text(
-                          "Yük Taşıtan olarak devam et",
+                          "Yük Taşıtan olarak kayıt ol",
                           style: TextStyle(
                             color: Colors.green.shade600,
                             fontWeight: FontWeight.bold,
