@@ -13,6 +13,8 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController surnameController = TextEditingController();
   String? userType;
 
   @override
@@ -25,6 +27,26 @@ class _SignupPageState extends State<SignupPage> {
             key: _formKey,
             child: Column(
               children: [
+                TextFormField(
+                  controller: nameController,
+                  decoration: InputDecoration(labelText: 'İsim'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: surnameController,
+                  decoration: InputDecoration(labelText: 'Soyisim'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your surname';
+                    }
+                    return null;
+                  },
+                ),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(labelText: 'Email'),
@@ -84,6 +106,8 @@ class _SignupPageState extends State<SignupPage> {
                             .collection('users')
                             .doc(userCredential.user?.uid)
                             .set({
+                          'name': nameController.text,
+                          'surname': surnameController.text,
                           'email': emailController.text,
                           'userType': userType,
                         });
@@ -113,7 +137,6 @@ class _SignupPageState extends State<SignupPage> {
                       }
                     }
                   },
-                  
                   child: Text('Kayıt Ol'),
                 ),
               ],
