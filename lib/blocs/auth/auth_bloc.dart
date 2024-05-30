@@ -8,14 +8,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authRepository) : super(AuthInitial());
 
-  @override
-  Stream<AuthState> mapEventToState(AuthEvent event) async* {
-    if (event is SignInEvent) {
-      yield* _mapSignInEventToState(event);
-    } else if (event is SignUpEvent) {
-      yield* _mapSignUpEventToState(event);
-    }
-  }
+ 
 
   Stream<AuthState> _mapSignInEventToState(SignInEvent event) async* {
     yield SigningInState(); // Giriş yapılıyor durumunu bildir

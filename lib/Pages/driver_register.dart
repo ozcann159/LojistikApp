@@ -12,9 +12,8 @@ class DriverRegistrationPage extends StatefulWidget {
 class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   final _firebaseService = FirebaseService();
-  TextEditingController _licenseController = TextEditingController();
-  TextEditingController _certificationController = TextEditingController();
-  TextEditingController _truckTypeController = TextEditingController();
+ 
+
 
   String? _selectedLicense;
   String? _selectedCertification;
@@ -53,7 +52,7 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
             truckType: truckType,
             license: license);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Şoför kaydı başarıyla tamamlandı'),
           ),
         );

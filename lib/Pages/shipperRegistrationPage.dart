@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/add_load_posting_screen.dart';
-import 'package:loadspotter/Pages/load_postings_screen.dart';
+
 
 class ShipperRegistrationPage extends StatefulWidget {
   const ShipperRegistrationPage({Key? key}) : super(key: key);
