@@ -99,6 +99,7 @@ class _SignupPageState extends State<SignupPage> {
                             .createUserWithEmailAndPassword(
                           email: emailController.text,
                           password: passwordController.text,
+                          
                         );
 
                         // Save user type to Firestore
@@ -137,6 +138,7 @@ class _SignupPageState extends State<SignupPage> {
                       }
                     }
                   },
+                  
                   child: Text('Kayıt Ol'),
                 ),
               ],

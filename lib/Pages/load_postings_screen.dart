@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/load_postings_details_screen.dart';
+import 'package:loadspotter/Pages/profile.page.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 import 'package:loadspotter/repositories/firestore_services.dart';
 
@@ -13,6 +14,14 @@ class LoadPostingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Yük İlanları'),
         backgroundColor: Colors.green,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()));
+              },
+              icon: Icon(Icons.account_circle))
+        ],
       ),
       body: StreamBuilder<List<LoadPosting>>(
         stream: firestoreService.getLoadPostings(),

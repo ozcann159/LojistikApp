@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:loadspotter/Pages/load_postings_screen.dart'; // Bu satırın doğru olduğundan emin olun
+import 'package:loadspotter/Pages/profile.page.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 
 class AddLoadPostingScreen extends StatefulWidget {
@@ -97,16 +98,17 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
     'Osmaniye',
     'Düzce'
   ];
-    String _selectedLoadingCity = 'Adana';
+  String _selectedLoadingCity = 'Adana';
   String _selectedDestinationCity = 'Sinop';
 
-  DateTime? _selectedDate; 
-  
+  DateTime? _selectedDate;
+
   String _weight = ''; // Üst kısımda tanımlayın
 
   void _addLoadPosting() async {
     if (_formKey.currentState!.validate()) {
-      final String id = FirebaseFirestore.instance.collection('loadPostings').doc().id;
+      final String id =
+          FirebaseFirestore.instance.collection('loadPostings').doc().id;
 
       final loadPosting = LoadPosting(
         loadType: _selectedType,
@@ -116,7 +118,10 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
         weight: double.parse(_weight.isNotEmpty ? _weight : '0.0'),
       );
 
-      await FirebaseFirestore.instance.collection('loadPostings').doc(id).set(loadPosting.toMap());
+      await FirebaseFirestore.instance
+          .collection('loadPostings')
+          .doc(id)
+          .set(loadPosting.toMap());
 
       // Burada yönlendirme yapılacak
       Navigator.pushReplacement(
@@ -126,12 +131,22 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Yük İlanı Ekle'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -268,7 +283,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
     );
   }
 
-    String _formatDateTime(DateTime dateTime) {
+  String _formatDateTime(DateTime dateTime) {
     // Teslim tarihini biçimlendirme
     return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
   }
