@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/add_load_posting_screen.dart';
-import 'package:loadspotter/Pages/driver_register.dart';
 import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/Pages/signup_page.dart';
 
@@ -257,63 +256,63 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DriverRegistrationPage(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            side: BorderSide(color: Colors.green.shade600),
-                          ),
-                          backgroundColor: Colors.white,
-                        ),
-                        child: Text(
-                          "Şoför olarak kayıt ol",
-                          style: TextStyle(
-                            color: Colors.green.shade600,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddLoadPostingScreen(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity, 45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            side: BorderSide(color: Colors.green.shade600),
-                          ),
-                        ),
-                        child: Text(
-                          "Yük Taşıtan olarak kayıt ol",
-                          style: TextStyle(
-                            color: Colors.green.shade600,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 10.0,
+                      // ),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => DriverRegistrationPage(),
+                      //       ),
+                      //     );
+                      //   },
+                      //   style: ElevatedButton.styleFrom(
+                      //     minimumSize: const Size(double.infinity, 45),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(50),
+                      //       side: BorderSide(color: Colors.green.shade600),
+                      //     ),
+                      //     backgroundColor: Colors.white,
+                      //   ),
+                      //   child: Text(
+                      //     "Şoför olarak kayıt ol",
+                      //     style: TextStyle(
+                      //       color: Colors.green.shade600,
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 16,
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 10.0,
+                      // ),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => AddLoadPostingScreen(),
+                      //       ),
+                      //     );
+                      //   },
+                      //   style: ElevatedButton.styleFrom(
+                      //     minimumSize: Size(double.infinity, 45),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(50),
+                      //       side: BorderSide(color: Colors.green.shade600),
+                      //     ),
+                      //   ),
+                      //   child: Text(
+                      //     "Yük Taşıtan olarak kayıt ol",
+                      //     style: TextStyle(
+                      //       color: Colors.green.shade600,
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 16,
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 20,
                       ),

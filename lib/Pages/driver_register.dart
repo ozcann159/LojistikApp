@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loadspotter/Pages/load_postings_screen.dart';
+import 'package:loadspotter/Pages/login_page.dart';
 import 'package:loadspotter/repositories/firestore_services.dart';
 
 class DriverRegistrationPage extends StatefulWidget {
@@ -59,7 +59,7 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
         );
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
+          MaterialPageRoute(builder: (context) => LoginPage()),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
