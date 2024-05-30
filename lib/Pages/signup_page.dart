@@ -104,13 +104,17 @@ class _SignupPageState extends State<SignupPage> {
                           );
                         }
                       } on FirebaseAuthException catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Failed to sign up: ${e.message}'),
-                        ));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                'Bu e-posta adresi zaten kullanımda. Lütfen farklı bir e-posta deneyin.'),
+                          ),
+                        );
                       }
                     }
                   },
-                  child: Text('Sign Up'),
+                  
+                  child: Text('Kayıt Ol'),
                 ),
               ],
             ),
