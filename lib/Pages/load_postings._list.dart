@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:loadspotter/Pages/load_postings_details_screen.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 
@@ -26,8 +27,9 @@ class LoadPostingsList extends StatelessWidget {
             itemCount: loadPostings.length,
             itemBuilder: (context, index) {
               final loadPosting = loadPostings[index];
+              final formattedDate = _formatDateTime(loadPosting.deliveryDate);
               return ListTile(
-                title: Text(loadPosting.deliveryDate),
+                title: Text(formattedDate),
                 subtitle: Text(loadPosting.destinationAddress),
                 onTap: () {
                   Navigator.push(
@@ -45,4 +47,8 @@ class LoadPostingsList extends StatelessWidget {
       ),
     );
   }
+}
+
+String _formatDateTime(DateTime dateTime) {
+  return DateFormat('dd-MM-yyyy').format(dateTime);
 }

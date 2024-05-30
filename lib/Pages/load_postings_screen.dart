@@ -28,7 +28,7 @@ class LoadPostingsScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: loadPostings.length,
               itemBuilder: (context, index) {
-                final loadPosting = loadPostings[index];
+                final LoadPosting loadPosting = loadPostings[index];
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Card(
@@ -53,7 +53,9 @@ class LoadPostingsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              loadPosting.deliveryDate,
+                              loadPosting.deliveryDate
+                                  .toString()
+                                  .substring(0, 10),
                               style: TextStyle(
                                   color: Colors.grey[800],
                                   fontSize: 20,
@@ -77,7 +79,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'Miktar: ${loadPosting.id}',
+                              'Yük Türü: ${loadPosting.loadType}',
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: 15,

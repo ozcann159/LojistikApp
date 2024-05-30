@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:loadspotter/models/loadPosting.dart';
+import 'package:intl/intl.dart';
 import 'package:loadspotter/Pages/load_postings_screen.dart'; // Bu satırın doğru olduğundan emin olun
+import 'package:loadspotter/models/loadPosting.dart';
 
 class AddLoadPostingScreen extends StatefulWidget {
   @override
@@ -96,25 +97,26 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
     'Osmaniye',
     'Düzce'
   ];
-  String _selectedLoadingCity = 'Adana';
+    String _selectedLoadingCity = 'Adana';
   String _selectedDestinationCity = 'Sinop';
+
+  DateTime? _selectedDate; 
+  
+  String _weight = ''; // Üst kısımda tanımlayın
 
   void _addLoadPosting() async {
     if (_formKey.currentState!.validate()) {
-      final String id =
-          FirebaseFirestore.instance.collection('loadPostings').doc().id;
+      final String id = FirebaseFirestore.instance.collection('loadPostings').doc().id;
 
       final loadPosting = LoadPosting(
-        id: id,
+        loadType: _selectedType,
         loadingAddress: _selectedLoadingCity,
         destinationAddress: _selectedDestinationCity,
-        deliveryDate: DateTime.now().toString(),
+        deliveryDate: _selectedDate!,
+        weight: double.parse(_weight.isNotEmpty ? _weight : '0.0'),
       );
 
-      await FirebaseFirestore.instance
-          .collection('loadPostings')
-          .doc(id)
-          .set(loadPosting.toMap());
+      await FirebaseFirestore.instance.collection('loadPostings').doc(id).set(loadPosting.toMap());
 
       // Burada yönlendirme yapılacak
       Navigator.pushReplacement(
@@ -123,6 +125,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -204,10 +207,69 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
                 onPressed: _addLoadPosting,
                 child: Text('İlanı Ekle'),
               ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      decoration:
+                          InputDecoration(labelText: 'Yük Miktarı (kg)'),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          _weight = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Lütfen yük miktarını girin';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Teslim Tarihi'),
+                      readOnly: true,
+                      controller: TextEditingController(
+                          text: _selectedDate != null
+                              ? _selectedDate.toString()
+                              : ''),
+                      onTap: () async {
+                        final DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDate != null && pickedDate != _selectedDate) {
+                          setState(() {
+                            _selectedDate = DateTime(pickedDate.year,
+                                pickedDate.month, pickedDate.day);
+                          });
+                        }
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Lütfen teslim tarihini seçin';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+    String _formatDateTime(DateTime dateTime) {
+    // Teslim tarihini biçimlendirme
+    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
   }
 }

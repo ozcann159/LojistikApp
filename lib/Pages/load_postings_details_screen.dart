@@ -5,7 +5,7 @@ import 'package:loadspotter/blocs/offer/offer_event.dart';
 import 'package:loadspotter/blocs/offer/offer_state.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 import 'package:loadspotter/models/offer.dart';
-import 'package:loadspotter/repositories/firestore_services.dart';
+
 
 class LoadPostingDetailsScreen extends StatefulWidget {
   final LoadPosting loadPosting;
@@ -26,16 +26,17 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<OffersBloc>(context).add(LoadOffers(widget.loadPosting.id));
+    BlocProvider.of<OffersBloc>(context)
+        .add(LoadOffers(widget.loadPosting.loadType));
   }
 
   @override
   Widget build(BuildContext context) {
-    final firestoreService = FirestoreService();
+   
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.loadPosting.id),
+        title: Text(widget.loadPosting.loadType),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,6 +51,10 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                   style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 8),
               Text('Yük Adresi: ${widget.loadPosting.loadingAddress}',
+                  style: const TextStyle(fontSize: 16)),
+              Text('Ağırlık: ${widget.loadPosting.weight}',
+                  style: const TextStyle(fontSize: 16)),
+              Text('Yük Tipi: ${widget.loadPosting.loadType}',
                   style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 8),
               // Text('Miktar: ${widget.loadPosting.id}',
@@ -98,7 +103,7 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
                         if (_formKey.currentState!.validate()) {
                           final newOffer = Offer(
                             id: DateTime.now().toIso8601String(),
-                            loadPostingId: widget.loadPosting.id,
+                            loadPostingId: widget.loadPosting.loadType,
                             offerAmount: _offerAmountController.text,
                             deliveryTime: _deliveryTimeController.text,
                             contactInfo: _contactInfoController.text,

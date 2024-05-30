@@ -8,10 +8,7 @@ class FirestoreService {
 
   // Yük ilanı ekleme
   Future<void> addLoadPosting(LoadPosting loadPosting) {
-    return _db
-        .collection('loadPostings')
-        .doc(loadPosting.id)
-        .set(loadPosting.toMap());
+    return _db.collection('loadPostings').add(loadPosting.toMap());
   }
 
   // Teklif ekleme
@@ -22,9 +19,9 @@ class FirestoreService {
   // Yük ilanlarını getirme
   Stream<List<LoadPosting>> getLoadPostings() {
     return _db.collection('loadPostings').snapshots().map((snapshot) {
-      return snapshot.docs
-          .map((doc) => LoadPosting.fromMap(doc.data() as Map<String, dynamic>))
-          .toList();
+      return snapshot.docs.map((doc) {
+        return LoadPosting.fromMap(doc.data() as Map<String, dynamic>);
+      }).toList();
     });
   }
 
