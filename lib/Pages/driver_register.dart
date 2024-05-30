@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/repositories/firestore_services.dart';
 
 class DriverRegistrationPage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
 
   Future<void> _saveDate() async {
     if (_formKey.currentState!.validate()) {
-        String license = _selectedLicense!;
+      String license = _selectedLicense!;
       String certification = _selectedCertification!;
       String truckType = _selectedTruckOptions!;
 
@@ -55,6 +56,10 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
           SnackBar(
             content: Text('Şoför kaydı başarıyla tamamlandı'),
           ),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

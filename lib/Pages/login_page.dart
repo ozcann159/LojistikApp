@@ -33,26 +33,33 @@ class _LoginPageState extends State<LoginPage> {
             .collection('users')
             .doc(userCredential.user?.uid)
             .get();
+        if (!userDoc.exists) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Kullanıcı bulunamadı, lütfen kayıt olun'),
+          ));
+          return;
+        }
+
         String userType = userDoc['userType'];
 
         if (userType == 'Driver') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => DriverRegistrationPage()),
+            MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
           );
-        } else if (userType == 'Freighter') {
+        } else if (userType == 'Shipper') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
+            MaterialPageRoute(builder: (context) => AddLoadPostingScreen()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Invalid user type'),
+            content: Text('Geçersiz kullanıcı türü'),
           ));
         }
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Failed to sign in: ${e.message}'),
+          content: Text('Giriş yapılamadı: ${e.message}'),
         ));
       }
     }
@@ -63,19 +70,18 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.green.shade800,
-                Colors.green.shade700,
-                Colors.green.shade400,
-              ],
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.green.shade800,
+                  Colors.green.shade700,
+                  Colors.green.shade400,
+                ],
+              ),
             ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const SizedBox(
                 height: 80,
               ),
@@ -325,9 +331,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
+            ])),
       ),
     );
   }

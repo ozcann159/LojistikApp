@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:loadspotter/repositories/auth_repository.dart';
-import 'package:loadspotter/Pages/home_page.dart';
+import 'package:flutter/material.dart';
+import 'package:loadspotter/Pages/driver_register.dart';
+import 'package:loadspotter/Pages/shipperRegistrationPage.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -54,7 +54,7 @@ class _SignupPageState extends State<SignupPage> {
                       userType = newValue!;
                     });
                   },
-                  items: <String>['Driver', 'Freighter']
+                  items: <String>['Driver', 'Shipper']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -72,22 +72,37 @@ class _SignupPageState extends State<SignupPage> {
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
                       try {
-                        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        UserCredential userCredential = await FirebaseAuth
+                            .instance
+                            .createUserWithEmailAndPassword(
                           email: emailController.text,
                           password: passwordController.text,
                         );
 
                         // Save user type to Firestore
-                        await FirebaseFirestore.instance.collection('users').doc(userCredential.user?.uid).set({
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(userCredential.user?.uid)
+                            .set({
                           'email': emailController.text,
                           'userType': userType,
                         });
 
-                        // Navigate to home page
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
+                        // Navigate to specific registration page based on user type
+                        if (userType == 'Driver') {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DriverRegistrationPage()),
+                          );
+                        } else if (userType == 'Shipper') {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ShipperRegistrationPage()),
+                          );
+                        }
                       } on FirebaseAuthException catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('Failed to sign up: ${e.message}'),
