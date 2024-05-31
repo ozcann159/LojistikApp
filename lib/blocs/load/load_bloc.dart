@@ -16,13 +16,13 @@ class LoadBloc extends Bloc<LoadEvent, LoadState> {
   }
 
   Stream<LoadState> _mapLoadStartedToState() async* {
-    // Yükleme işlemi burada gerçekleştirilir
+    // Yükleme işlemi
     yield LoadInProgress();
     try {
       // Yükleme işlemi başarılıysa
       yield const LoadSuccess( []);
     } catch (error) {
-      // Yükleme işlemi başarısızsa
+     
       yield LoadFailure(error.toString());
     }
   }

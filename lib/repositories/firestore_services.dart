@@ -40,7 +40,7 @@ class FirestoreService {
 }
 
 class FirebaseService {
-  // ignore: deprecated_member_use
+
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
 
   Future<void> saveDriverData({

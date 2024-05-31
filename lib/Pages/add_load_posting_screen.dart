@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:loadspotter/Pages/load_postings_screen.dart'; // Bu satırın doğru olduğundan emin olun
+import 'package:loadspotter/Pages/load_postings_screen.dart'; 
 import 'package:loadspotter/Pages/profile.page.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 
@@ -13,7 +13,7 @@ class AddLoadPostingScreen extends StatefulWidget {
 class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _selectedType = 'Normal'; // Default yük türü
+  String _selectedType = 'Normal'; 
 
   List<String> _cities = [
     'Adana',
@@ -103,7 +103,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
 
   DateTime? _selectedDate;
 
-  String _weight = ''; // Üst kısımda tanımlayın
+  String _weight = ''; 
 
   void _addLoadPosting() async {
     if (_formKey.currentState!.validate()) {
@@ -123,7 +123,6 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
           .doc(id)
           .set(loadPosting.toMap());
 
-      // Burada yönlendirme yapılacak
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
@@ -284,7 +283,6 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    // Teslim tarihini biçimlendirme
     return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
   }
 }

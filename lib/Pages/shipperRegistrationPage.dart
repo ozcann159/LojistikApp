@@ -38,7 +38,6 @@ class _ShipperRegistrationPageState extends State<ShipperRegistrationPage> {
             SnackBar(content: Text('Yük taşıtan kaydı başarıyla tamamlandı')),
           );
 
-          // Yönlendirme
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => LoginPage()),

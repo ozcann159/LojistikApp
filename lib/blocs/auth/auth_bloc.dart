@@ -11,7 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
  
 
   Stream<AuthState> _mapSignInEventToState(SignInEvent event) async* {
-    yield SigningInState(); // Giriş yapılıyor durumunu bildir
+    yield SigningInState(); // Giriş yapılıyordurum
     try {
       final result = await _authRepository.signIn(event.email, event.password);
       if (result == "Giriş Başarılı") {
@@ -20,12 +20,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield SignInFailureState(result);
       }
     } catch (error) {
-      yield SignInFailureState(error.toString()); // Giriş başarısız durumunu bildir
+      yield SignInFailureState(error.toString()); // Giriş başarısız durumu
     }
   }
 
   Stream<AuthState> _mapSignUpEventToState(SignUpEvent event) async* {
-    yield SigningUpState(); // Kayıt olunuyor durumunu bildir
+    yield SigningUpState(); // Kayıt olunuyor durumu
     try {
       final result = await _authRepository.signUp(event.email, event.password);
       if (result == "Kayıt Başarılı") {

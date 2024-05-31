@@ -16,7 +16,7 @@ class OffersBloc extends Bloc<OffersEvent, OffersState> {
       emit(OffersLoading());
       await firestoreService.addOffer(event.offer);
       emit(OfferAddedSuccess());
-      add(LoadOffers(event.offer.loadPostingId)); // Teklif eklendikten sonra teklifleri yükle
+      add(LoadOffers(event.offer.loadPostingId));  // teklifleri yükle
     } catch (e) {
       emit(OfferError(message: e.toString()));
     }

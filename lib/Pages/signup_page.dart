@@ -113,7 +113,7 @@ class _SignupPageState extends State<SignupPage> {
                           'userType': userType,
                         });
 
-                        // Navigate to specific registration page based on user type
+                       
                         if (userType == 'Driver') {
                           Navigator.pushReplacement(
                             context,

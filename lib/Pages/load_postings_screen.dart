@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/load_postings_details_screen.dart';
 import 'package:loadspotter/Pages/profile.page.dart';
 import 'package:loadspotter/models/loadPosting.dart';
@@ -82,7 +81,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             Text(
                               'Lokasyon: ${loadPosting.loadingAddress}',
                               style: TextStyle(
-                                  color: Colors.red,
+                                  color: Colors.grey[700],
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -90,7 +89,7 @@ class LoadPostingsScreen extends StatelessWidget {
                             Text(
                               'Yük Türü: ${loadPosting.loadType}',
                               style: TextStyle(
-                                  color: Colors.red,
+                                  color: Colors.grey[700],
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -104,16 +103,6 @@ class LoadPostingsScreen extends StatelessWidget {
             );
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddLoadPostingScreen()),
-          );
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green[200],
       ),
     );
   }

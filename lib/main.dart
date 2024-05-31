@@ -10,7 +10,7 @@ import 'package:loadspotter/repositories/firestore_services.dart';
 
 import 'firebase_options.dart';
 
-const Color primaryColor = Color.fromARGB(15, 240, 123, 255); // Ana renk
+const Color primaryColor = Color.fromARGB(15, 240, 123, 255); 
 const Color secondaryColor = Color(0xFF28a745);
 const Color scaffolBackgroundColor = Colors.white;
 const Color textColor = Colors.white;

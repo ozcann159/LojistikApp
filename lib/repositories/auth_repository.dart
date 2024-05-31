@@ -58,8 +58,6 @@ class AuthRepository {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-
-      // Kullanıcı bilgilerini güncelleme
       User? currentUser = _auth.currentUser;
       if (currentUser != null) {
         await currentUser.updateDisplayName('$firstName $lastName');

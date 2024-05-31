@@ -25,7 +25,6 @@ class User {
       'email': email,
       'name': name,
       'userType': userType,
-      // Diğer parametreler buraya eklenir
     };
   }
 }
