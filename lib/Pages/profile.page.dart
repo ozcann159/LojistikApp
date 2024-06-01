@@ -29,35 +29,59 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // void _signOut(BuildContext context) async {
+  //   try {
+  //     await FirebaseAuth.instance.signOut();
+  //     Navigator.of(context).pushNamedAndRemoveUntil('/giris', (route) => false);
+  //   } catch (e) {
+  //     print("Çıkış yaparken hata oluştu $e");
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profil'),
       ),
-      body: _userData.isNotEmpty
-          ? ListView(
-              padding: EdgeInsets.all(16.0),
-              children: [
-                ListTile(
-                  title: Text('İsim'),
-                  subtitle: Text(_userData['name'] ?? ''),
-                ),
-                ListTile(
-                  title: Text('Soyisim'),
-                  subtitle: Text(_userData['surname'] ?? ''),
-                ),
-                ListTile(
-                  title: Text('E-posta'),
-                  subtitle: Text(_userData['email'] ?? ''),
-                ),
-                ListTile(
-                  title: Text('Kullanıcı Türü'),
-                  subtitle: Text(_userData['userType'] ?? ''),
-                ),
-              ],
-            )
-          : Center(child: CircularProgressIndicator()),
+      body: Column(
+        children: [
+          Expanded(
+            child: _userData.isNotEmpty
+                ? ListView(
+                    padding: EdgeInsets.all(16.0),
+                    children: [
+                      ListTile(
+                        title: Text('İsim'),
+                        subtitle: Text(_userData['name'] ?? ''),
+                      ),
+                      ListTile(
+                        title: Text('Soyisim'),
+                        subtitle: Text(_userData['surname'] ?? ''),
+                      ),
+                      ListTile(
+                        title: Text('E-posta'),
+                        subtitle: Text(_userData['email'] ?? ''),
+                      ),
+                      ListTile(
+                        title: Text('Kullanıcı Türü'),
+                        subtitle: Text(_userData['userType'] ?? ''),
+                      ),
+                    ],
+                  )
+                : Center(child: CircularProgressIndicator()),
+          ),
+          // Container(
+          //   padding: EdgeInsets.symmetric(vertical: 70, horizontal: 50),
+          //   child: ElevatedButton(
+          //     onPressed: () {
+          //       _signOut(context);
+          //     },
+          //     child: Text('Çıkış Yap'),
+          //   ),
+          // )
+        ],
+      ),
     );
   }
 }

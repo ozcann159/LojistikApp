@@ -6,7 +6,6 @@ import 'package:loadspotter/blocs/offer/offer_state.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 import 'package:loadspotter/models/offer.dart';
 
-
 class LoadPostingDetailsScreen extends StatefulWidget {
   final LoadPosting loadPosting;
 
@@ -32,8 +31,6 @@ class _LoadPostingDetailsScreenState extends State<LoadPostingDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.loadPosting.loadType),
