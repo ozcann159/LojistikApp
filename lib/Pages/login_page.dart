@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
           String? userType = userDoc['userType'] as String?;
           if (userType == null) {
             if (context != null) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('Kullanıcı türü belirlenemedi'),
               ));
             }
@@ -252,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {

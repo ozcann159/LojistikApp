@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/login_page.dart';
 import 'package:loadspotter/repositories/firestore_services.dart';
@@ -91,83 +92,108 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Driver Registration'),
+        title: Text('Sürücü Bilgileri'),
       ),
-      body: Container(
-        margin: EdgeInsets.only(top: 20.0),
+      body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                DropdownButtonFormField<String>(
-                  value: _selectedLicense,
-                  items: licenseOptions.map((String license) {
-                    return DropdownMenuItem<String>(
-                      value: license,
-                      child: Text(license),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedLicense = newValue;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Ehliyet Bilgisi',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Lütfen ehliyet bilgisini seçin';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Icon(CupertinoIcons.doc_plaintext),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedLicense,
+                        items: licenseOptions.map((String license) {
+                          return DropdownMenuItem<String>(
+                            value: license,
+                            child: Text(license),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedLicense = newValue;
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Ehliyet Bilgisi',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Lütfen ehliyet bilgisini seçin';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                DropdownButtonFormField<String>(
-                  value: _selectedCertification,
-                  items: certificationOptions.map((String certification) {
-                    return DropdownMenuItem<String>(
-                      value: certification,
-                      child: Text(certification),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedCertification = newValue;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Sertifikalar',
-                  ),
+                Row(
+                  children: [
+                    Icon(CupertinoIcons.square_favorites),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedCertification,
+                        items: certificationOptions.map((String certification) {
+                          return DropdownMenuItem<String>(
+                            value: certification,
+                            child: Text(certification),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedCertification = newValue;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Sertifikalar',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                DropdownButtonFormField<String>(
-                  value: _selectedTruckOptions,
-                  items: truckOptions.map((String type) {
-                    return DropdownMenuItem<String>(
-                      value: type,
-                      child: Text(type),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedTruckOptions = newValue;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Kamyon Tipi',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Lütfen Kamyon Tipini Seçin';
-                    }
-                    return null;
-                  },
+                Row(
+                  children: [
+                    Icon(Icons.fire_truck_outlined),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedTruckOptions,
+                        items: truckOptions.map((String type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(type),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedTruckOptions = newValue;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Kamyon Tipi',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Lütfen Kamyon Tipini Seçin';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Araç Plakası',
+                    icon: Icon(CupertinoIcons.hexagon),
                   ),
                   onChanged: (value) {
                     _carPlate = value;
@@ -189,7 +215,19 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
                               _saveDate();
                             }
                           },
-                          child: Text('Kaydet'),
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(150, 45),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              backgroundColor: Colors.blue.shade600),
+                          child: const Text(
+                            'Kaydet',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
                         ),
                 ),
               ],

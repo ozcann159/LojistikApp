@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/load_postings_details_screen.dart';
 import 'package:loadspotter/Pages/profile.page.dart';
@@ -11,15 +12,21 @@ class LoadPostingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Yük İlanları'),
-        backgroundColor: Colors.green,
+        title: Text(
+          'Yük İlanları',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue.shade600,
         actions: [
           IconButton(
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ProfilePage()));
               },
-              icon: Icon(Icons.account_circle))
+              icon: Icon(
+                color: Colors.white,
+                CupertinoIcons.person_circle,
+              )),
         ],
       ),
       body: StreamBuilder<List<LoadPosting>>(
