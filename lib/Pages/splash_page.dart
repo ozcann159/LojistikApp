@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loadspotter/Pages/login_page.dart';
-import 'package:loadspotter/Pages/signup_page.dart';
-
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -14,6 +12,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: SizedBox(
         width: double.infinity,
         child: Column(
@@ -37,29 +36,29 @@ class _SplashPageState extends State<SplashPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
                   },
-                  child: const Text(
-                    "Giriş Yap",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  child: Text(
+                    "Taşınacak Yüküm Var",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(300, 45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40)),
-                      backgroundColor: Colors.green.shade800),
+                      backgroundColor: Colors.white),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>  SignupPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
                   },
                   child: const Text(
-                    "Kayıt Ol",
+                    "Nakliyeciyim Aracım Var",
                     style: TextStyle(color: Colors.black, fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(

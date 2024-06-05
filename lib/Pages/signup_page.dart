@@ -32,7 +32,7 @@ class _SignupPageState extends State<SignupPage> {
                   decoration: InputDecoration(labelText: 'İsim'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return 'Lütfen adızı giriniz';
                     }
                     return null;
                   },
@@ -42,7 +42,7 @@ class _SignupPageState extends State<SignupPage> {
                   decoration: InputDecoration(labelText: 'Soyisim'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your surname';
+                      return 'Lütfen soyadınızı giriniz';
                     }
                     return null;
                   },
@@ -52,31 +52,31 @@ class _SignupPageState extends State<SignupPage> {
                   decoration: InputDecoration(labelText: 'Email'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Lütfen emailinizi giriniz';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
                   controller: passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(labelText: 'Şifre'),
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return 'Lütfen Şifrenizi Giriniz';
                     }
                     return null;
                   },
                 ),
                 DropdownButtonFormField<String>(
                   value: userType,
-                  hint: Text('Select User Type'),
+                  hint: Text('Kullanıcı Türünü Seçin'),
                   onChanged: (String? newValue) {
                     setState(() {
                       userType = newValue!;
                     });
                   },
-                  items: <String>['Driver', 'Shipper']
+                  items: <String>['Şoför', 'Yük İlanı Veren']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -85,7 +85,7 @@ class _SignupPageState extends State<SignupPage> {
                   }).toList(),
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select a user type';
+                      return 'Lütfen bir kullanıcı türü seçin';
                     }
                     return null;
                   },
@@ -114,13 +114,13 @@ class _SignupPageState extends State<SignupPage> {
                         });
 
                        
-                        if (userType == 'Driver') {
+                        if (userType == 'Şoför') {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DriverRegistrationPage()),
                           );
-                        } else if (userType == 'Shipper') {
+                        } else if (userType == 'Yük İlanı Veren') {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

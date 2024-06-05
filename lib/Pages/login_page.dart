@@ -73,9 +73,9 @@ class _LoginPageState extends State<LoginPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.green.shade800,
-                  Colors.green.shade700,
-                  Colors.green.shade400,
+                  Colors.blue.shade800,
+                  Colors.blue.shade700,
+                  Colors.blue.shade400,
                 ],
               ),
             ),
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.green.shade300,
+                                color: Colors.blue.shade300,
                                 blurRadius: 20,
                                 offset: const Offset(0, 10),
                               ),
@@ -208,49 +208,54 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                            onPressed: signIn,
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(150, 45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: signIn,
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(150, 45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                backgroundColor: Colors.blue.shade600,
                               ),
-                              backgroundColor: Colors.green.shade600,
-                            ),
-                            child: const Text(
-                              "Giriş Yap",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                              child: const Text(
+                                "Giriş Yap",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignupPage(),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignupPage(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(150, 45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                  side: BorderSide(
+                                    color: Colors.blue.shade600,
+                                  ),
                                 ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(150, 45),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                                side: BorderSide(
-                                  color: Colors.green.shade600,
-                                ),
+                                backgroundColor: Colors.white,
                               ),
-                              backgroundColor: Colors.white,
-                            ),
-                            child: Text(
-                              "Kayıt Ol",
-                              style: TextStyle(
-                                color: Colors.green.shade600,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                              child: Text(
+                                "Kayıt Ol",
+                                style: TextStyle(
+                                  color: Colors.blue.shade600,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),

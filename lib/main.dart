@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loadspotter/Pages/login_page.dart';
+import 'package:loadspotter/Pages/splash_page.dart';
 import 'package:loadspotter/blocs/load/load_bloc.dart';
 import 'package:loadspotter/blocs/offer/offer_bloc.dart';
 import 'package:loadspotter/blocs/userController/user_controller_bloc.dart';
@@ -46,14 +46,14 @@ class MyApp extends StatelessWidget {
           title: 'My App',
           theme: ThemeData(
             fontFamily: "Poppins",
-            primaryColor: const Color.fromARGB(255, 69, 181, 73),
+            primaryColor: Color.fromARGB(255, 61, 103, 175),
             scaffoldBackgroundColor: const Color.fromARGB(255, 56, 170, 61),
             textTheme: const TextTheme(
               bodySmall: TextStyle(color: textColor),
               bodyMedium: TextStyle(color: textColor),
             ),
           ),
-          home: LoginPage()),
+          home: SplashPage()),
     );
   }
 }
