@@ -40,23 +40,25 @@ class FirestoreService {
 }
 
 class FirebaseService {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final DatabaseReference _database = FirebaseDatabase.instance.reference();
-
-  Future<void> saveDriverData({
-    required String license,
+   Future<void> saveDriverData({
     required String certification,
     required String truckType,
+    required String license,
+    required String carPlate,
   }) async {
     try {
-      await _database.child('drivers').push().set({
-        'license': license,
+      await _firestore.collection('drivers').add({
         'certification': certification,
         'truckType': truckType,
+        'license': license,
+        'carPlate': carPlate,
+        'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Firebase error: $e');
-      throw Exception('Failed to save driver data: $e');
+      print('Error saving driver data: $e');
+      rethrow;
     }
   }
 }

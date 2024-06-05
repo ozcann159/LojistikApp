@@ -76,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
                       userType = newValue!;
                     });
                   },
-                  items: <String>['Şoför', 'Yük İlanı Veren']
+                  items: <String>['Driver', 'Shipper']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -99,7 +99,6 @@ class _SignupPageState extends State<SignupPage> {
                             .createUserWithEmailAndPassword(
                           email: emailController.text,
                           password: passwordController.text,
-                          
                         );
 
                         // Save user type to Firestore
@@ -113,14 +112,13 @@ class _SignupPageState extends State<SignupPage> {
                           'userType': userType,
                         });
 
-                       
-                        if (userType == 'Şoför') {
+                        if (userType == 'Driver') {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DriverRegistrationPage()),
                           );
-                        } else if (userType == 'Yük İlanı Veren') {
+                        } else if (userType == 'Shipper') {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -138,7 +136,6 @@ class _SignupPageState extends State<SignupPage> {
                       }
                     }
                   },
-                  
                   child: Text('Kayıt Ol'),
                 ),
               ],

@@ -1,67 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:loadspotter/Pages/add_load_posting_screen.dart';
-import 'package:loadspotter/Pages/load_postings_details_screen.dart';
-import 'package:loadspotter/models/loadPosting.dart';
+import 'package:loadspotter/Pages/login_page.dart';
 
 class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Yük İlanları'),
-      ),
-      body: LoadPostingsList(), 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddLoadPostingScreen()),
-          );
-        },
-        child: Icon(Icons.add),
+  const HomePage({Key? key}) : super(key: key);
+
+  Future<void> _navigateToLogin(BuildContext context, String userType) async {
+  try {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(userType: userType),
       ),
     );
+
+    if (result != null && result) {
+      // Kullanıcı giriş yaptıysa Firebase Authentication ile işlem yapılacak
+      // Örneğin, kullanıcı kaydedilecek veya kullanıcı türü belirlenecek
+      // Burada FirebaseAuth.instance.currentUser ile giriş yapmış kullanıcı bilgilerine erişebilirsiniz.
+    }
+  } catch (e) {
+    print('Giriş hatası: $e');
   }
 }
 
-class LoadPostingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('loadPostings').snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Bir hata oluştu: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('Henüz yük ilanı yok.'));
-        } else {
-          final loadPostings = snapshot.data!.docs
-              .map((doc) => LoadPosting.fromMap(doc.data() as Map<String, dynamic>))
-              .toList();
-
-          return ListView.builder(
-            itemCount: loadPostings.length,
-            itemBuilder: (context, index) {
-              final loadPosting = loadPostings[index];
-              return ListTile(
-                title: Text(loadPosting.loadingAddress),
-                subtitle: Text(loadPosting.destinationAddress),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoadPostingDetailsScreen(loadPosting: loadPosting),
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        }
-      },
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              width: 180,
+              height: 200,
+            ),
+            const SizedBox(height: 50),
+            const Text(
+              'Lojistik Yük Dünyası\'na Hoş Geldiniz!',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 60),
+            ElevatedButton(
+              onPressed: () async => await _navigateToLogin(context, 'shipper'), // shipper userType'ını doğru alıyor mu?
+              child: const Text(
+                "Taşınacak Yüküm Var",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(300, 45),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                backgroundColor: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async => await _navigateToLogin(context, 'driver'), // driver userType'ını doğru alıyor mu?
+              child: const Text(
+                "Nakliyeciyim Aracım Var",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(300, 45),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                backgroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,12 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/Pages/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final String? userType;
+
+
+  const LoginPage({
+    Key? key,
+     this.userType,
+  }) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -32,34 +40,49 @@ class _LoginPageState extends State<LoginPage> {
             .collection('users')
             .doc(userCredential.user?.uid)
             .get();
-        if (!userDoc.exists) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Kullanıcı bulunamadı, lütfen kayıt olun'),
-          ));
-          return;
-        }
 
-        String userType = userDoc['userType'];
+        if (userDoc.exists) {
+          String? userType = userDoc['userType'] as String?;
+          if (userType == null) {
+            if (context != null) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Kullanıcı türü belirlenemedi'),
+              ));
+            }
+            return;
+          }
 
-        if (userType == 'Driver') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
-          );
-        } else if (userType == 'Shipper') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => AddLoadPostingScreen()),
-          );
+          if (userType == 'Driver') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoadPostingsScreen()),
+            );
+          } else if (userType == 'Shipper') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddLoadPostingScreen()),
+            );
+          } else {
+            if (context != null) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Geçersiz kullanıcı türü'),
+              ));
+            }
+          }
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Geçersiz kullanıcı türü'),
-          ));
+          if (context != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Kullanıcı bulunamadı, lütfen kayıt olun'),
+            ));
+          }
         }
       } on FirebaseAuthException catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Giriş yapılamadı: ${e.message}'),
-        ));
+        if (context != null) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Giriş yapılamadı: ${e.message}'),
+          ));
+        }
       }
     }
   }
@@ -69,23 +92,24 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.blue.shade800,
-                  Colors.blue.shade700,
-                  Colors.blue.shade400,
-                ],
-              ),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.shade800,
+                Colors.blue.shade700,
+                Colors.blue.shade400,
+              ],
             ),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               const SizedBox(
                 height: 80,
               ),
-              const Padding(
-                padding: EdgeInsets.all(20),
+              Padding(
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -122,220 +146,162 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 50),
-                      Form(
-                        key: _formKey,
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.blue.shade300,
-                                blurRadius: 20,
-                                offset: const Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.green.shade50,
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 50),
+                        Form(
+                          key: _formKey,
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.blue.shade300,
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.green.shade50,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                child: TextFormField(
-                                  controller: emailTextEditingController,
-                                  decoration: const InputDecoration(
-                                    hintText: "E-Posta",
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none,
-                                    prefixIcon:
-                                        Icon(Icons.person_outline_rounded),
+                                  child: TextFormField(
+                                    controller: emailTextEditingController,
+                                    decoration: const InputDecoration(
+                                      hintText: "E-Posta",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none,
+                                      prefixIcon:
+                                          Icon(Icons.person_outline_rounded),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Lütfen e-posta adresinizi giriniz';
+                                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                          .hasMatch(value)) {
+                                        return 'Geçersiz e-posta adresi';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Lütfen e-posta adresinizi giriniz';
-                                    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                        .hasMatch(value)) {
-                                      return 'Geçersiz e-posta adresi';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.green.shade50,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.green.shade50,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                child: TextFormField(
-                                  controller: passwordTextEditingController,
-                                  obscureText: true,
-                                  decoration: const InputDecoration(
-                                    hintText: "Parola",
-                                    hintStyle: TextStyle(color: Colors.grey),
-                                    border: InputBorder.none,
-                                    prefixIcon: Icon(Icons.lock),
+                                  child: TextFormField(
+                                    controller: passwordTextEditingController,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(
+                                      hintText: "Parola",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(Icons.lock),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Lütfen parolanızı doğru giriniz';
+                                      } else if (value.length < 6) {
+                                        return 'Parola en az 6 karakter olmalıdır';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Lütfen parolanızı doğru giriniz';
-                                    } else if (value.length < 6) {
-                                      return 'Parola en az 6 karakter olmalıdır';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: signIn,
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(150, 45),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.04,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: signIn,
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(150, 45),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  backgroundColor: Colors.blue.shade600,
                                 ),
-                                backgroundColor: Colors.blue.shade600,
-                              ),
-                              child: const Text(
-                                "Giriş Yap",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                child: const Text(
+                                  "Giriş Yap",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignupPage(),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SignupPage(),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(150, 45),
+                                  shape
+: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(150, 45),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                  side: BorderSide(
+                                  backgroundColor: Colors.white,
+                                ),
+                                child: Text(
+                                  "Kayıt Ol",
+                                  style: TextStyle(
                                     color: Colors.blue.shade600,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Text(
-                                "Kayıt Ol",
-                                style: TextStyle(
-                                  color: Colors.blue.shade600,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(
-                      //   height: 10.0,
-                      // ),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => DriverRegistrationPage(),
-                      //       ),
-                      //     );
-                      //   },
-                      //   style: ElevatedButton.styleFrom(
-                      //     minimumSize: const Size(double.infinity, 45),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(50),
-                      //       side: BorderSide(color: Colors.green.shade600),
-                      //     ),
-                      //     backgroundColor: Colors.white,
-                      //   ),
-                      //   child: Text(
-                      //     "Şoför olarak kayıt ol",
-                      //     style: TextStyle(
-                      //       color: Colors.green.shade600,
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 16,
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 10.0,
-                      // ),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => AddLoadPostingScreen(),
-                      //       ),
-                      //     );
-                      //   },
-                      //   style: ElevatedButton.styleFrom(
-                      //     minimumSize: Size(double.infinity, 45),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(50),
-                      //       side: BorderSide(color: Colors.green.shade600),
-                      //     ),
-                      //   ),
-                      //   child: Text(
-                      //     "Yük Taşıtan olarak kayıt ol",
-                      //     style: TextStyle(
-                      //       color: Colors.green.shade600,
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 16,
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        "Şifremi Unuttum",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.3,
-                      ),
-                    ],
-                  ),
-                ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          "Şifremi Unuttum",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                        ),
+                      ],
+                    )),
               ),
-            ])),
+            ],
+          ),
+        ),
       ),
     );
   }
