@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:loadspotter/Pages/load_postings_screen.dart'; 
+import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/Pages/profile.page.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 
@@ -13,7 +13,7 @@ class AddLoadPostingScreen extends StatefulWidget {
 class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _selectedType = 'Normal'; 
+  String _selectedType = 'Normal';
 
   List<String> _cities = [
     'Adana',
@@ -103,7 +103,7 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
 
   DateTime? _selectedDate;
 
-  String _weight = ''; 
+  String _weight = '';
 
   void _addLoadPosting() async {
     if (_formKey.currentState!.validate()) {
@@ -217,11 +217,6 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
                 },
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _addLoadPosting,
-                child: Text('İlanı Ekle'),
-              ),
-              SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -274,6 +269,23 @@ class _AddLoadPostingScreenState extends State<AddLoadPostingScreen> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(height: 70),
+              ElevatedButton(
+                onPressed: _addLoadPosting,
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size(150, 45),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    backgroundColor: Colors.blue.shade600),
+                child: Text(
+                  'İlanı Ekle',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
               ),
             ],
           ),

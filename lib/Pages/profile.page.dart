@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -52,18 +53,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: EdgeInsets.all(16.0),
                     children: [
                       ListTile(
+                        leading: Icon(CupertinoIcons.person),
                         title: Text('İsim'),
                         subtitle: Text(_userData['name'] ?? ''),
                       ),
                       ListTile(
+                        leading: Icon(CupertinoIcons.person),
                         title: Text('Soyisim'),
                         subtitle: Text(_userData['surname'] ?? ''),
                       ),
                       ListTile(
+                        leading: Icon(CupertinoIcons.envelope),
                         title: Text('E-posta'),
                         subtitle: Text(_userData['email'] ?? ''),
                       ),
                       ListTile(
+                        leading: Icon(Icons.work),
                         title: Text('Kullanıcı Türü'),
                         subtitle: Text(_userData['userType'] ?? ''),
                       ),
