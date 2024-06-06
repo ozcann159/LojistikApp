@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadspotter/Pages/login_page.dart';
+import 'package:loadspotter/Pages/shipperRegistrationPage.dart';
 import 'package:loadspotter/blocs/load/load_bloc.dart';
 import 'package:loadspotter/blocs/offer/offer_bloc.dart';
+import 'package:loadspotter/blocs/shipper_registration/shipper_registration_bloc.dart';
 import 'package:loadspotter/blocs/userController/user_controller_bloc.dart';
 import 'package:loadspotter/repositories/auth_repository.dart';
 import 'package:loadspotter/repositories/firestore_services.dart';
@@ -40,6 +42,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<OffersBloc>(
           create: (context) => OffersBloc(firestoreService: FirestoreService()),
         ),
+        BlocProvider<ShipperRegistrationBloc>(
+          create: (context) => ShipperRegistrationBloc(FirestoreService()),
+        ),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -53,7 +58,7 @@ class MyApp extends StatelessWidget {
               bodyMedium: TextStyle(color: textColor),
             ),
           ),
-          home: LoginPage()),
+          home: ShipperRegistrationPage()),
     );
   }
 }

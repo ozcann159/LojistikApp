@@ -1,10 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loadspotter/models/loadPosting.dart';
 import 'package:loadspotter/models/offer.dart';
+import 'package:loadspotter/models/shipper.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Yük taşıtan kaydı ekleme
+  Future<void> saveShipper(Shipper shipper) async {
+    User? user = _auth
+        .currentUser; // FirebaseAuth örneğini kullanarak kullanıcıyı alıyoruz
+    if (user != null) {
+      await _db.collection('shippers').doc(user.uid).set(shipper.toMap());
+    } else {
+      throw Exception('Kullanıcı bilgileri alınamadı');
+    }
+  }
 
   // Yük ilanı ekleme
   Future<void> addLoadPosting(LoadPosting loadPosting) {
@@ -42,7 +55,7 @@ class FirestoreService {
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-   Future<void> saveDriverData({
+  Future<void> saveDriverData({
     required String certification,
     required String truckType,
     required String license,
