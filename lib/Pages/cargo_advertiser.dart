@@ -2,10 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loadspotter/Pages/add_load_posting_screen.dart';
 import 'package:loadspotter/Pages/login_page.dart';
 import 'package:loadspotter/Pages/profile.page.dart';
+import 'package:loadspotter/widgets/load_spotter_bottom_navigationbar.dart';
 
-class CargoAdvertiser extends StatelessWidget {
+class CargoAdvertiser extends StatefulWidget {
+  @override
+  State<CargoAdvertiser> createState() => _CargoAdvertiserState();
+}
+
+class _CargoAdvertiserState extends State<CargoAdvertiser> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -118,12 +134,58 @@ class CargoAdvertiser extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   const Text(
-                    'Toplam kullanıcı sayısı: 1000', // Burada kullanıcı sayısını belirliyor olabilirsiniz.
+                    'Toplam kullanıcı sayısı: 1000', // Burada kullanıcı sayısı belirlenebilir.
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddLoadPostingScreen()));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(15.0),
+                          child: FaIcon(
+                            FontAwesomeIcons.dolly,
+                            size: 50,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                'YÜKÜM VAR',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              Text(
+                                'İlan Vermek İstiyorum',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ],
@@ -172,6 +234,28 @@ class CargoAdvertiser extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: LoadSpotterBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.doc_chart),
+            label: 'Yük İlanı Ver',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.list_bullet),
+            label: 'İlanlarm',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.group_solid),
+            label: 'Şoför Havuzu',
+          ),
+        ],
       ),
     );
   }
