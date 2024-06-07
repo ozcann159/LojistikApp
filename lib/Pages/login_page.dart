@@ -2,18 +2,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:loadspotter/Pages/add_load_posting_screen.dart';
+import 'package:loadspotter/Pages/cargo_advertiser.dart';
 import 'package:loadspotter/Pages/load_postings_screen.dart';
 import 'package:loadspotter/Pages/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   final String? userType;
 
-
   const LoginPage({
     Key? key,
-     this.userType,
+    this.userType,
   }) : super(key: key);
 
   @override
@@ -60,8 +58,7 @@ class _LoginPageState extends State<LoginPage> {
           } else if (userType == 'Shipper') {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                  builder: (context) => AddLoadPostingScreen()),
+              MaterialPageRoute(builder: (context) => CargoAdvertiser()),
             );
           } else {
             if (context != null) {
@@ -265,8 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(150, 45),
-                                  shape
-: RoundedRectangleBorder(
+                                  shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                   backgroundColor: Colors.white,
