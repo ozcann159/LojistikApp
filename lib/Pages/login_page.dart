@@ -108,8 +108,8 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 80,
               ),
-              Padding(
-                padding: const EdgeInsets.all(20),
+              const Padding(
+                padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
